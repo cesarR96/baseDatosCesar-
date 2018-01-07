@@ -25,6 +25,41 @@ MongoClient.connect(url, (err, db) => {
                 console.log('usuario registrado correctamente  ', JSON.stringify(doc));
             });
         }
+
+        db.close();
+    });
+    Usuarios.findOne({nomusu: 'cesar'}, (err, doc) => {
+        if (err) throw err;
+
+        if (doc) {
+            console.log('Usuario registrado anteriormente');
+        }
+        else {
+            let salt = bcrypt.genSaltSync();
+            let password_hash = bcrypt.hashSync('clave', salt);
+            Usuarios.insertOne({nomusu: 'cesar', clave: password_hash}, (err, doc) => {
+                if (err) throw err;
+                console.log('usuario registrado correctamente  ', JSON.stringify(doc));
+            });
+        }
+        
+        db.close();
+    });
+    Usuarios.findOne({nomusu: 'otro'}, (err, doc) => {
+        if (err) throw err;
+
+        if (doc) {
+            console.log('Usuario registrado anteriormente');
+        }
+        else {
+            let salt = bcrypt.genSaltSync();
+            let password_hash = bcrypt.hashSync('otro', salt);
+            Usuarios.insertOne({nomusu: 'admin', clave: password_hash}, (err, doc) => {
+                if (err) throw err;
+                console.log('usuario registrado correctamente  ', JSON.stringify(doc));
+            });
+        }
+        
         db.close();
     });
 });
